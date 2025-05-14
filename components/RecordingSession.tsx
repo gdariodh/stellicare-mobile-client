@@ -249,7 +249,7 @@ export default function RecordingSession() {
             onPress={isPatientRecording ? stopPatientRecording : recordPatient}
             className="items-center"
           >
-            <View className="bg-blue-500 rounded-full p-4">
+            <View className="bg-red-500 rounded-full p-4">
               <Ionicons name="mic" size={24} color="white" />
             </View>
             <Text className="text-gray-600 font-medium mt-2">

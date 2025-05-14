@@ -1,17 +1,22 @@
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { Box } from './ui/box';
 import { Heading } from './ui/heading';
 import { Text } from './ui/text';
 import { useEffect, useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
-export default function Header() {
-  const [currentTime, setCurrentTime] = useState(new Date());
+export default function Header({
+  showRecorder,
+  setShowRecorder,
+}: {
+  showRecorder?: boolean;
+  setShowRecorder?: (show: boolean) => void;
+}) {
   const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      setCurrentTime(now);
 
       const hour = now.getHours();
       if (hour >= 5 && hour < 12) {
@@ -36,23 +41,43 @@ export default function Header() {
     return () => clearInterval(interval);
   }, []);
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const handleBackToHome = () => {
+    if (setShowRecorder) {
+      setShowRecorder(false);
+    }
   };
 
   return (
     <Box className="px-4 pt-12 pb-4 bg-sky-600">
-      <View className="flex-row justify-between items-center">
+      <View className="flex-row justify-between items-center pt-10">
         <Heading size="xl" className="text-white">
           Stellicare
         </Heading>
       </View>
-      <Text className="text-white mt-2 text-xl font-medium">
-        {greeting}, Dr. Raúl
-      </Text>
-      <Text className="text-sky-100 mt-1">
-        Medical Voice Recognition System
-      </Text>
+
+      {showRecorder ? (
+        <View className="mt-4">
+          {/* Back button row */}
+          <View className="flex-row items-center">
+            <Pressable
+              onPress={handleBackToHome}
+              className="flex-row items-center"
+            >
+              <Ionicons name="arrow-back" size={24} color="white" />
+              <Text className="text-white ml-2">Back to Home</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <View className="mt-2">
+          <Text className="text-white text-xl font-medium">
+            {greeting}, Dr. Raúl
+          </Text>
+          <Text className="text-sky-100 mt-1">
+            Medical Voice Recognition System
+          </Text>
+        </View>
+      )}
     </Box>
   );
 }

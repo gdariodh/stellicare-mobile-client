@@ -14,7 +14,7 @@ export default function StatsCards() {
         <Box>
           <View className="flex-row items-center">
             <Ionicons name="people" size={20} color="#3b82f6" />
-            <Text className="text-2xl font-bold ml-2">12</Text>
+            <Text className="text-2xl font-bold ml-2 text-black">12</Text>
           </View>
         </Box>
       </Card>
@@ -26,7 +26,7 @@ export default function StatsCards() {
         <Box>
           <View className="flex-row items-center">
             <Ionicons name="mic" size={20} color="#3b82f6" />
-            <Text className="text-2xl font-bold ml-2">8</Text>
+            <Text className="text-2xl font-bold ml-2 text-black">8</Text>
           </View>
         </Box>
       </Card>
@@ -38,7 +38,7 @@ export default function StatsCards() {
         <Box>
           <View className="flex-row items-center">
             <Ionicons name="time" size={20} color="#3b82f6" />
-            <Text className="text-xl font-medium ml-2">14:30</Text>
+            <Text className="text-xl font-medium ml-2 text-black">14:30</Text>
           </View>
         </Box>
       </Card>
@@ -50,7 +50,7 @@ export default function StatsCards() {
         <Box>
           <View className="flex-row items-center">
             <Ionicons name="checkmark-circle" size={20} color="#3b82f6" />
-            <Text className="text-2xl font-bold ml-2">75%</Text>
+            <Text className="text-2xl font-bold ml-2 text-black">75%</Text>
           </View>
         </Box>
       </Card>

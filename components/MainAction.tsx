@@ -24,7 +24,9 @@ export default function MainAction({
             onPress={handleStartSession}
           >
             <Ionicons name="mic" size={20} color="white" className="mr-2" />
-            <ButtonText>Start Recording Session</ButtonText>
+            <ButtonText className="text-white">
+              Start Recording Session
+            </ButtonText>
           </Button>
 
           <Text className="text-center mt-2 text-gray-600 px-4">
