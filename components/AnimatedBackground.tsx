@@ -25,17 +25,18 @@ const AnimatedBackground = ({
   children,
   style,
   colors = {
-    sky: '#b8e3f5', // Medical app light blue background from the image
-    wave: '#a0d8f0', // Lighter blue for waves
-    bottom: '#b8e3f5', // Same as sky for seamless look
+    sky: '#D4E9ED', // Uno de los azules claros solicitados
+    wave: '#C0E5E9', // El otro azul claro solicitado
+    bottom: '#D4E9ED', // Manteniendo coherencia con el cielo
     waveGradient: {
-      start: '#a0d8f0', // Light blue
-      middle: '#8fd0ed', // Medium blue
-      end: '#7ac5e4', // Slightly darker blue
+      start: '#C0E5E9', // Azul claro
+      middle: '#F3BA00', // Amarillo dorado solicitado
+      end: '#CFC0C0', // Gris rosado solicitado
     },
-    circles: '#7ac5e4', // Color for decorative circles
+    circles: '#F3BA00', // Círculos en amarillo dorado
+    decorations: '#CFC0C0', // Decoraciones en gris rosado
   },
-  animationDuration = 25000, // Slower, more subtle animation for medical app feel
+  animationDuration = 20000, // Duración reducida para un efecto más dinámico
 }: {
   children: React.ReactNode;
   style?: any;
@@ -49,6 +50,7 @@ const AnimatedBackground = ({
       end: string;
     };
     circles?: string;
+    decorations?: string;
   };
   animationDuration?: number;
 }) => {
@@ -62,7 +64,7 @@ const AnimatedBackground = ({
 
   // Start the animations when the component mounts
   useEffect(() => {
-    // Horizontal wave movement - more subtle for medical app feel
+    // Horizontal wave movement - más pronunciado
     horizontalProgress.value = withRepeat(
       withTiming(1, {
         duration: animationDuration,
@@ -72,25 +74,25 @@ const AnimatedBackground = ({
       true // Reverse on completion
     );
 
-    // Vertical wave movement (very slight bobbing)
+    // Vertical wave movement - más amplitud
     verticalProgress.value = withRepeat(
       withSequence(
         withTiming(1, {
-          duration: animationDuration / 2.5,
+          duration: animationDuration / 2,
           easing: Easing.inOut(Easing.quad),
         }),
         withTiming(0, {
-          duration: animationDuration / 2.5,
+          duration: animationDuration / 2,
           easing: Easing.inOut(Easing.quad),
         })
       ),
       -1 // Infinite repeat
     );
 
-    // Scale breathing effect - more subtle
+    // Scale breathing effect - más pronunciado
     scaleProgress.value = withRepeat(
       withDelay(
-        animationDuration / 4,
+        animationDuration / 5,
         withTiming(1, {
           duration: animationDuration / 1.5,
           easing: Easing.inOut(Easing.sin),
@@ -100,10 +102,10 @@ const AnimatedBackground = ({
       true // Reverse on completion
     );
 
-    // Animated decorative circles
+    // Animated decorative circles - más dinámicos
     circleProgress1.value = withRepeat(
       withTiming(1, {
-        duration: animationDuration * 0.7,
+        duration: animationDuration * 0.6,
         easing: Easing.inOut(Easing.cubic),
       }),
       -1,
@@ -112,9 +114,9 @@ const AnimatedBackground = ({
 
     circleProgress2.value = withRepeat(
       withDelay(
-        2000,
+        1500,
         withTiming(1, {
-          duration: animationDuration * 0.8,
+          duration: animationDuration * 0.7,
           easing: Easing.inOut(Easing.quad),
         })
       ),
@@ -124,9 +126,9 @@ const AnimatedBackground = ({
 
     circleProgress3.value = withRepeat(
       withDelay(
-        4000,
+        3000,
         withTiming(1, {
-          duration: animationDuration * 0.6,
+          duration: animationDuration * 0.5,
           easing: Easing.inOut(Easing.sin),
         })
       ),
@@ -135,7 +137,7 @@ const AnimatedBackground = ({
     );
   }, [animationDuration]);
 
-  // Animated style for the wave path
+  // Animated style for the wave path - amplificado
   const animatedWaveStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -143,28 +145,28 @@ const AnimatedBackground = ({
           translateX: interpolate(
             horizontalProgress.value,
             [0, 1],
-            [0, -SCREEN_WIDTH * 0.7]
+            [0, -SCREEN_WIDTH * 0.9] // Mayor movimiento horizontal
           ),
         },
         {
           translateY: interpolate(
             verticalProgress.value,
             [0, 1],
-            [0, -15] // Subtle vertical movement
+            [0, -25] // Mayor movimiento vertical
           ),
         },
         {
           scale: interpolate(
             scaleProgress.value,
             [0, 1],
-            [1, 1.05] // Subtle scaling effect
+            [1, 1.08] // Mayor efecto de escala
           ),
         },
       ],
     };
   });
 
-  // Create multiple waves for a layered effect
+  // Create multiple waves for a layered effect - con más amplitud
   const createWave = (
     height: number,
     opacity: number,
@@ -195,14 +197,14 @@ const AnimatedBackground = ({
             translateX: interpolate(
               waveProgress.value,
               [0, 1],
-              [0, -SCREEN_WIDTH * 0.7]
+              [0, -SCREEN_WIDTH * 0.9] // Mayor movimiento horizontal
             ),
           },
           {
             translateY: interpolate(
               verticalProgress.value,
               [0, 1],
-              [0, -7 * amplitude] // More subtle vertical movement for medical app
+              [0, -12 * amplitude] // Mayor movimiento vertical
             ),
           },
         ],
@@ -210,26 +212,26 @@ const AnimatedBackground = ({
       };
     });
 
-    // More gentle, flowing waves for medical app
+    // Ondas más pronunciadas
     return (
       <Animated.View style={animatedStyle}>
         <Svg
-          height={SCREEN_HEIGHT * 0.4}
-          width={SCREEN_WIDTH * 2}
+          height={SCREEN_HEIGHT * 0.45} // Mayor altura para las olas
+          width={SCREEN_WIDTH * 2.2} // Mayor ancho para extender las olas
           style={styles.svg}
         >
           <Path
-            d={`M0,${40 * amplitude} 
-              C${SCREEN_WIDTH * 0.25},${25 * amplitude} 
-              ${SCREEN_WIDTH * 0.5},${55 * amplitude} 
-              ${SCREEN_WIDTH * 0.75},${30 * amplitude} 
+            d={`M0,${50 * amplitude} 
+              C${SCREEN_WIDTH * 0.25},${30 * amplitude} 
+              ${SCREEN_WIDTH * 0.5},${70 * amplitude} 
+              ${SCREEN_WIDTH * 0.75},${35 * amplitude} 
               C${SCREEN_WIDTH},${15 * amplitude} 
-              ${SCREEN_WIDTH * 1.25},${45 * amplitude} 
-              ${SCREEN_WIDTH * 1.5},${20 * amplitude} 
+              ${SCREEN_WIDTH * 1.25},${60 * amplitude} 
+              ${SCREEN_WIDTH * 1.5},${25 * amplitude} 
               C${SCREEN_WIDTH * 1.75},${10 * amplitude} 
-              ${SCREEN_WIDTH * 2},${35 * amplitude} 
-              ${SCREEN_WIDTH * 2},${SCREEN_HEIGHT * 0.4} 
-              L0,${SCREEN_HEIGHT * 0.4} Z`}
+              ${SCREEN_WIDTH * 2},${45 * amplitude} 
+              ${SCREEN_WIDTH * 2.2},${SCREEN_HEIGHT * 0.45} 
+              L0,${SCREEN_HEIGHT * 0.45} Z`}
             fill={fillId ? `url(#${fillId})` : colors.wave}
             fillOpacity={opacity}
           />
@@ -238,7 +240,7 @@ const AnimatedBackground = ({
     );
   };
 
-  // Create decorative circle components to mimic the medical app UI
+  // Create decorative circle components - más llamativos
   const createDecorativeCircle = (
     x: number,
     y: number,
@@ -253,24 +255,24 @@ const AnimatedBackground = ({
             translateX: interpolate(
               progress.value,
               [0, 0.5, 1],
-              [0, x * 0.1, 0]
+              [0, x * 0.15, 0] // Mayor movimiento
             ),
           },
           {
             translateY: interpolate(
               progress.value,
               [0, 0.5, 1],
-              [0, y * 0.1, 0]
+              [0, y * 0.15, 0] // Mayor movimiento
             ),
           },
           {
-            scale: interpolate(progress.value, [0, 0.5, 1], [1, 1.1, 1]),
+            scale: interpolate(progress.value, [0, 0.5, 1], [1, 1.15, 1]), // Mayor escala
           },
         ],
         opacity: interpolate(
           progress.value,
           [0, 0.5, 1],
-          [opacity, opacity * 0.8, opacity]
+          [opacity, opacity * 0.7, opacity]
         ),
       };
     });
@@ -295,7 +297,7 @@ const AnimatedBackground = ({
 
   return (
     <View style={[styles.container, style]}>
-      {/* Sky background with slight animation */}
+      {/* Sky background with enhanced animation */}
       <Animated.View
         style={[
           styles.skyBackground,
@@ -304,7 +306,7 @@ const AnimatedBackground = ({
             opacity: interpolate(
               scaleProgress.value,
               [0, 1],
-              [0.97, 1] // Very subtle sky brightness pulsing
+              [0.94, 1] // Mayor contraste
             ),
           })),
         ]}
@@ -317,42 +319,64 @@ const AnimatedBackground = ({
             <LinearGradient id="waveGradient1" x1="0" y1="0" x2="0" y2="1">
               <Stop
                 offset="0"
-                stopColor={colors.waveGradient?.start || colors.wave}
-                stopOpacity="0.7"
-              />
-              <Stop
-                offset="0.5"
-                stopColor={colors.waveGradient?.middle || colors.wave}
+                stopColor={colors.waveGradient?.start}
                 stopOpacity="0.8"
               />
               <Stop
+                offset="0.5"
+                stopColor={colors.waveGradient?.middle}
+                stopOpacity="0.6"
+              />
+              <Stop
                 offset="1"
-                stopColor={colors.waveGradient?.end || colors.wave}
-                stopOpacity="0.9"
+                stopColor={colors.waveGradient?.end}
+                stopOpacity="0.7"
               />
             </LinearGradient>
             <LinearGradient id="waveGradient2" x1="0" y1="0" x2="0" y2="1">
               <Stop
                 offset="0"
-                stopColor={colors.waveGradient?.end || colors.wave}
+                stopColor={colors.waveGradient?.middle}
+                stopOpacity="0.75"
+              />
+              <Stop
+                offset="0.6"
+                stopColor={colors.waveGradient?.end}
                 stopOpacity="0.65"
               />
               <Stop
                 offset="1"
-                stopColor={colors.waveGradient?.start || colors.wave}
-                stopOpacity="0.75"
+                stopColor={colors.waveGradient?.start}
+                stopOpacity="0.8"
+              />
+            </LinearGradient>
+            <LinearGradient id="waveGradient3" x1="0" y1="0" x2="0" y2="1">
+              <Stop
+                offset="0"
+                stopColor={colors.waveGradient?.end}
+                stopOpacity="0.7"
+              />
+              <Stop
+                offset="0.4"
+                stopColor={colors.waveGradient?.start}
+                stopOpacity="0.6"
+              />
+              <Stop
+                offset="1"
+                stopColor={colors.waveGradient?.middle}
+                stopOpacity="0.8"
               />
             </LinearGradient>
           </Defs>
         </Svg>
 
-        {/* Multiple layered waves for depth effect - with more subtle waves */}
-        {createWave(SCREEN_HEIGHT * 0.4, 0.6, 0, 1.0, 'waveGradient1')}
-        {createWave(SCREEN_HEIGHT * 0.38, 0.7, 700, 0.8, 'waveGradient2')}
-        {createWave(SCREEN_HEIGHT * 0.39, 0.5, 1500, 0.9, '')}
+        {/* Multiple layered waves for enhanced effect */}
+        {createWave(SCREEN_HEIGHT * 0.45, 0.8, 0, 1.2, 'waveGradient1')}
+        {createWave(SCREEN_HEIGHT * 0.42, 0.7, 500, 1.0, 'waveGradient2')}
+        {createWave(SCREEN_HEIGHT * 0.44, 0.6, 1000, 1.1, 'waveGradient3')}
       </View>
 
-      {/* Bottom fill with subtle animation */}
+      {/* Bottom fill with enhanced animation */}
       <Animated.View
         style={[
           styles.bottomFill,
@@ -363,7 +387,7 @@ const AnimatedBackground = ({
                 translateY: interpolate(
                   verticalProgress.value,
                   [0, 1],
-                  [0, -3] // Very subtle vertical movement
+                  [0, -8] // Mayor movimiento vertical
                 ),
               },
             ],
@@ -371,55 +395,80 @@ const AnimatedBackground = ({
         ]}
       />
 
-      {/* Decorative elements that mimic the curved lines in the medical app UI */}
+      {/* Decorative elements - más llamativos */}
       <View style={styles.decorations}>
-        {/* Medical app curved path decorations */}
+        {/* Curved path decorations */}
         <Svg
           height={SCREEN_HEIGHT}
           width={SCREEN_WIDTH}
           style={StyleSheet.absoluteFill}
         >
           <Path
-            d={`M${SCREEN_WIDTH * 0.1},${SCREEN_HEIGHT * 0.35} 
+            d={`M${SCREEN_WIDTH * 0.05},${SCREEN_HEIGHT * 0.35} 
                 Q${SCREEN_WIDTH * 0.5},${SCREEN_HEIGHT * 0.2} 
-                ${SCREEN_WIDTH * 0.9},${SCREEN_HEIGHT * 0.4}`}
-            stroke={colors.circles}
-            strokeWidth="1"
+                ${SCREEN_WIDTH * 0.95},${SCREEN_HEIGHT * 0.4}`}
+            stroke={colors.decorations || colors.circles}
+            strokeWidth="2" // Línea más gruesa
             fill="none"
-            strokeOpacity="0.3"
+            strokeOpacity="0.4" // Mayor opacidad
           />
           <Path
             d={`M${SCREEN_WIDTH * 0.05},${SCREEN_HEIGHT * 0.6} 
                 Q${SCREEN_WIDTH * 0.4},${SCREEN_HEIGHT * 0.75} 
                 ${SCREEN_WIDTH * 0.95},${SCREEN_HEIGHT * 0.5}`}
-            stroke={colors.circles}
-            strokeWidth="1"
+            stroke={colors.decorations || colors.circles}
+            strokeWidth="2" // Línea más gruesa
             fill="none"
-            strokeOpacity="0.2"
+            strokeOpacity="0.3" // Mayor opacidad
+          />
+          {/* Nueva línea decorativa */}
+          <Path
+            d={`M${SCREEN_WIDTH * 0.1},${SCREEN_HEIGHT * 0.8} 
+                Q${SCREEN_WIDTH * 0.6},${SCREEN_HEIGHT * 0.65} 
+                ${SCREEN_WIDTH * 0.9},${SCREEN_HEIGHT * 0.85}`}
+            stroke={colors.decorations || colors.circles}
+            strokeWidth="1.5"
+            fill="none"
+            strokeOpacity="0.25"
           />
         </Svg>
 
-        {/* Animated decorative circles */}
+        {/* Animated decorative circles - más y más grandes */}
         {createDecorativeCircle(
           SCREEN_WIDTH * 0.15,
           SCREEN_HEIGHT * 0.2,
-          30,
-          0.2,
+          35, // Mayor tamaño
+          0.25, // Mayor opacidad
           circleProgress1
         )}
         {createDecorativeCircle(
           SCREEN_WIDTH * 0.85,
           SCREEN_HEIGHT * 0.3,
-          20,
-          0.15,
+          25, // Mayor tamaño
+          0.2, // Mayor opacidad
           circleProgress2
         )}
         {createDecorativeCircle(
           SCREEN_WIDTH * 0.2,
           SCREEN_HEIGHT * 0.7,
-          40,
-          0.1,
+          45, // Mayor tamaño
+          0.15, // Mayor opacidad
           circleProgress3
+        )}
+        {/* Nuevos círculos decorativos */}
+        {createDecorativeCircle(
+          SCREEN_WIDTH * 0.75,
+          SCREEN_HEIGHT * 0.65,
+          30,
+          0.2,
+          circleProgress2
+        )}
+        {createDecorativeCircle(
+          SCREEN_WIDTH * 0.4,
+          SCREEN_HEIGHT * 0.4,
+          22,
+          0.25,
+          circleProgress1
         )}
       </View>
 
@@ -439,10 +488,10 @@ const styles = StyleSheet.create({
   },
   waveContainer: {
     position: 'absolute',
-    top: SCREEN_HEIGHT * 0.33,
+    top: SCREEN_HEIGHT * 0.3, // Posición ligeramente más alta
     left: 0,
     right: 0,
-    height: SCREEN_HEIGHT * 0.45,
+    height: SCREEN_HEIGHT * 0.5, // Mayor altura
     overflow: 'hidden',
   },
   svg: {
@@ -453,7 +502,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: SCREEN_HEIGHT * 0.42,
+    height: SCREEN_HEIGHT * 0.45, // Mayor altura
   },
   decorations: {
     ...StyleSheet.absoluteFillObject,
