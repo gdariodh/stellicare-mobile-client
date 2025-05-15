@@ -19,6 +19,7 @@ import {
   ModalFooter,
 } from '@/components/ui/modal';
 import { Heading } from '@/components/ui/heading';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function RecordingSession() {
   const doctorRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
@@ -29,39 +30,10 @@ export default function RecordingSession() {
   const [voiceDetected, setVoiceDetected] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const [doctorImage, setDoctorImage] = useState(null);
-  const [patientImage, setPatientImage] = useState(null);
-  const [loading, setLoading] = useState(true);
-
   const doctorPulseScale = useSharedValue(1);
   const patientPulseScale = useSharedValue(1);
 
   const voiceDetectionTimer = useRef(null);
-
-  const fetchRandomImages = async () => {
-    try {
-      setLoading(true);
-
-      const doctorResponse = await fetch(
-        'https://randomuser.me/api/?gender=male&inc=picture&nat=us,ca,gb,fr,de&noinfo'
-      );
-      const doctorData = await doctorResponse.json();
-
-      const patientResponse = await fetch(
-        'https://randomuser.me/api/?inc=picture&noinfo'
-      );
-      const patientData = await patientResponse.json();
-
-      setDoctorImage(doctorData.results[0].picture.large);
-      setPatientImage(patientData.results[0].picture.large);
-    } catch (error) {
-      console.error('Error al obtener imágenes aleatorias:', error);
-      setDoctorImage('https://randomuser.me/api/portraits/men/36.jpg');
-      setPatientImage('https://randomuser.me/api/portraits/women/44.jpg');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     (async () => {
@@ -72,8 +44,6 @@ export default function RecordingSession() {
           'Se requiere acceso al micrófono para grabar'
         );
       }
-
-      fetchRandomImages();
     })();
 
     return () => {
@@ -187,85 +157,88 @@ export default function RecordingSession() {
 
   const LoadingPlaceholder = () => (
     <View style={styles.loadingPlaceholder}>
-      <Text className="text-gray-500"></Text>
+      <Text className="text-gray-500 text-sm">Loading...</Text>
     </View>
   );
 
   return (
-    <View className="flex-1 bg-sky-100 pt-24">
-      <View className="items-center justify-center mt-4">
-        <View className="relative">
-          <View className="relative mb-2">
-            <Animated.View
-              style={[doctorPulseStyle, styles.pulseCircle]}
-              className="absolute bg-primary-500"
-            />
-            <View className="rounded-full p-1">
-              {loading ? (
-                <LoadingPlaceholder />
-              ) : (
-                <Image
-                  source={{ uri: doctorImage }}
-                  style={{ width: 64, height: 64, borderRadius: 32 }}
+    <AnimatedBackground>
+      {/* Contenedor principal centrado */}
+      <View
+        style={styles.mainContainer}
+        className="flex-1 justify-center items-center px-4"
+      >
+        <View className="w-full max-w-md flex">
+          {/* Doctor Recorder Section */}
+          <View className="items-center justify-center mb-10">
+            <View className="relative">
+              <View className="relative mb-2">
+                <Animated.View
+                  style={[doctorPulseStyle, styles.pulseCircle]}
+                  className="absolute bg-primary-500"
                 />
-              )}
+                <View className="rounded-full bg-blue-100 w-[69px] h-[69px]  flex items-center justify-center shadow-lg shadow-blue-500/50">
+                  <Image
+                    className="rounded-full  flex items-center justify-center"
+                    source={require('@/assets/images/doctor.png')}
+                    style={{ width: 59, height: 59 }}
+                  />
+                </View>
+              </View>
+
+              <Pressable
+                onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
+                className="items-center"
+              >
+                <View className="bg-blue-500 rounded-full p-4">
+                  <Ionicons name="mic-outline" size={24} color="white" />
+                </View>
+                <Text className="text-gray-600 font-medium mt-2">Dr. Raúl</Text>
+              </Pressable>
             </View>
           </View>
 
-          <Pressable
-            onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
-            className="items-center"
-          >
-            <View className="bg-blue-500 rounded-full p-4">
-              <Ionicons name="mic" size={24} color="white" />
-            </View>
-            <Text className="text-gray-600 font-medium mt-2">
-              Dr. Raúl Voice Recorder
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-
-      <View className="items-center justify-center mt-12">
-        <View className="relative">
-          <View className="relative mb-2">
-            <Animated.View
-              style={[patientPulseStyle, styles.pulseCircle]}
-              className="absolute bg-red-500"
-            />
-            <View className="rounded-full p-1">
-              {loading ? (
-                <LoadingPlaceholder />
-              ) : (
-                <Image
-                  source={{ uri: patientImage }}
-                  style={{ width: 64, height: 64, borderRadius: 32 }}
+          {/* Patient Recorder Section */}
+          <View className="items-center justify-center mb-10">
+            <View className="relative">
+              <View className="relative mb-2">
+                <Animated.View
+                  style={[patientPulseStyle, styles.pulseCircle]}
+                  className="absolute bg-red-500"
                 />
-              )}
+                <View className="rounded-full bg-blue-100 w-[69px] h-[69px]  flex items-center justify-center shadow-lg shadow-blue-500/50">
+                  <Image
+                    className="rounded-full  flex items-center justify-center"
+                    source={require('@/assets/images/patient.png')}
+                    style={{ width: 59, height: 59 }}
+                  />
+                </View>
+              </View>
+
+              <Pressable
+                onPress={
+                  isPatientRecording ? stopPatientRecording : recordPatient
+                }
+                className="items-center"
+              >
+                <View className="bg-red-500 rounded-full p-4">
+                  <Ionicons name="mic-outline" size={24} color="white" />
+                </View>
+                <Text className="text-gray-600 font-medium mt-2">Patient</Text>
+              </Pressable>
             </View>
           </View>
 
-          <Pressable
-            onPress={isPatientRecording ? stopPatientRecording : recordPatient}
-            className="items-center"
-          >
-            <View className="bg-red-500 rounded-full p-4">
-              <Ionicons name="mic" size={24} color="white" />
-            </View>
-            <Text className="text-gray-600 font-medium mt-2">
-              Patient Voice Recorder
+          <View className="flex-row items-center justify-center ">
+            <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
+            <Text className="text-slate-500 ml-1">
+              Recording is secure and encrypted.
             </Text>
-          </Pressable>
+          </View>
         </View>
       </View>
 
-      <View className="flex-row items-center justify-center mt-auto mb-8">
-        <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
-        <Text className="text-slate-500 ml-1">
-          Authentication in process...
-        </Text>
-      </View>
-
+      {/* Modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <ModalBackdrop />
         <ModalContent>
@@ -291,11 +264,16 @@ export default function RecordingSession() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </View>
+    </AnimatedBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   pulseCircle: {
     width: 80,
     height: 80,

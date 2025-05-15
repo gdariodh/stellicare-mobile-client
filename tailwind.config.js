@@ -30,7 +30,7 @@ module.exports = {
           // NEWS
           DEFAULT: '#2563eb',
           50: '#eff6ff',
-          100: '#dbeafe',
+          100: '#BEE3F8',
           200: '#bfdbfe',
           300: '#93c5fd',
           400: '#60a5fa',
