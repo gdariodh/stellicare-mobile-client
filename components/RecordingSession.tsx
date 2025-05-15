@@ -145,6 +145,9 @@ export default function RecordingSession() {
     return {
       transform: [{ scale: doctorPulseScale.value }],
       opacity: withTiming(isDoctorRecording ? 0.6 : 0, { duration: 300 }),
+      width: '100%',
+      height: '100%',
+      borderRadius: 16,
     };
   });
 
@@ -152,6 +155,9 @@ export default function RecordingSession() {
     return {
       transform: [{ scale: patientPulseScale.value }],
       opacity: withTiming(isPatientRecording ? 0.6 : 0, { duration: 300 }),
+      width: '100%',
+      height: '100%',
+      borderRadius: 16,
     };
   });
 
@@ -162,79 +168,75 @@ export default function RecordingSession() {
         style={styles.mainContainer}
         className="flex-1 justify-center items-center px-4"
       >
-        <View className="w-full max-w-md flex border h-full justify-center relative justify-evenly">
+        <View className="w-full max-w-md flex border h-full relative justify-evenly">
           {/* Doctor Recorder Section */}
-          <View className="items-center justify-center ">
-            <View className="relative">
-              <View className="relative mb-2">
-                <Animated.View
-                  style={[doctorPulseStyle, styles.pulseCircle]}
-                  className="absolute bg-primary-500"
-                />
-                <View className="rounded-full bg-blue-100 w-[69px] h-[69px]  flex items-center justify-center shadow-lg shadow-blue-500/50">
+          <Pressable
+            onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
+            className="items-center justify-center p-4 m-4 rounded-2xl"
+            style={styles.sectionContainer}
+          >
+            <View className="relative items-center justify-center">
+              <Animated.View
+                style={[doctorPulseStyle, styles.pulseBackground]}
+                className="absolute bg-primary-500"
+              />
+              <View className="relative items-center">
+                <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50 mb-4">
                   <Image
-                    className="rounded-full  flex items-center justify-center"
+                    className="rounded-full flex items-center justify-center"
                     source={require('@/assets/images/doctor.png')}
                     style={{ width: 59, height: 59 }}
                   />
                 </View>
-              </View>
 
-              <Pressable
-                onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
-                className="items-center"
-              >
-                <View className="bg-blue-500 rounded-full p-4">
+                <View className="bg-blue-500 rounded-full p-4 mb-2">
                   <Ionicons
                     name={isDoctorRecording ? 'stop' : 'mic'}
                     size={24}
                     color="white"
                   />
                 </View>
-                <Text className="text-gray-600 font-medium mt-2">Dr. Raúl</Text>
-              </Pressable>
+                <Text className="text-gray-600 font-medium">Dr. Raúl</Text>
+              </View>
             </View>
-          </View>
+          </Pressable>
 
           {/* Patient Recorder Section */}
-          <View className="items-center justify-center ">
-            <View className="relative">
-              <View className="relative mb-2">
-                <Animated.View
-                  style={[patientPulseStyle, styles.pulseCircle]}
-                  className="absolute bg-red-500"
-                />
-                <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50">
+          <Pressable
+            onPress={isPatientRecording ? stopPatientRecording : recordPatient}
+            className="items-center justify-center p-4 m-4 rounded-2xl"
+            style={styles.sectionContainer}
+          >
+            <View className="relative items-center justify-center">
+              <Animated.View
+                style={[patientPulseStyle, styles.pulseBackground]}
+                className="absolute bg-red-500"
+              />
+              <View className="relative items-center">
+                <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50 mb-4">
                   <Image
-                    className="rounded-full  flex items-center justify-center"
+                    className="rounded-full flex items-center justify-center"
                     source={require('@/assets/images/patient.png')}
                     style={{ width: 59, height: 59 }}
                   />
                 </View>
-              </View>
 
-              <Pressable
-                onPress={
-                  isPatientRecording ? stopPatientRecording : recordPatient
-                }
-                className="items-center"
-              >
-                <View className="bg-red-500 rounded-full p-4">
+                <View className="bg-red-500 rounded-full p-4 mb-2">
                   <Ionicons
                     name={isPatientRecording ? 'stop' : 'mic'}
                     size={24}
                     color="white"
                   />
                 </View>
-                <Text className="text-gray-600 font-medium mt-2">Patient</Text>
-              </Pressable>
+                <Text className="text-gray-600 font-medium">Patient</Text>
+              </View>
             </View>
-          </View>
+          </Pressable>
 
           <View className="flex-row items-center justify-center absolute right-0 bottom-0 left-0 pb-12">
             <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
             <Text className="text-slate-500 ml-1">
-              Recording is secure and encrypted.
+              This session is being securely recorded.
             </Text>
           </View>
         </View>
@@ -276,10 +278,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  pulseCircle: {
-    width: 69,
-    height: 69,
-    borderRadius: '100%',
+  sectionContainer: {
+    position: 'relative',
+    minHeight: 170,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  pulseBackground: {
     position: 'absolute',
     zIndex: 0,
   },
