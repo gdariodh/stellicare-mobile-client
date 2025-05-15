@@ -155,12 +155,6 @@ export default function RecordingSession() {
     };
   });
 
-  const LoadingPlaceholder = () => (
-    <View style={styles.loadingPlaceholder}>
-      <Text className="text-gray-500 text-sm">Loading...</Text>
-    </View>
-  );
-
   return (
     <AnimatedBackground>
       {/* Contenedor principal centrado */}
@@ -168,9 +162,9 @@ export default function RecordingSession() {
         style={styles.mainContainer}
         className="flex-1 justify-center items-center px-4"
       >
-        <View className="w-full max-w-md flex">
+        <View className="w-full max-w-md flex border h-full justify-center relative justify-evenly">
           {/* Doctor Recorder Section */}
-          <View className="items-center justify-center mb-10">
+          <View className="items-center justify-center ">
             <View className="relative">
               <View className="relative mb-2">
                 <Animated.View
@@ -191,7 +185,11 @@ export default function RecordingSession() {
                 className="items-center"
               >
                 <View className="bg-blue-500 rounded-full p-4">
-                  <Ionicons name="mic-outline" size={24} color="white" />
+                  <Ionicons
+                    name={isDoctorRecording ? 'stop' : 'mic'}
+                    size={24}
+                    color="white"
+                  />
                 </View>
                 <Text className="text-gray-600 font-medium mt-2">Dr. Raúl</Text>
               </Pressable>
@@ -199,14 +197,14 @@ export default function RecordingSession() {
           </View>
 
           {/* Patient Recorder Section */}
-          <View className="items-center justify-center mb-10">
+          <View className="items-center justify-center ">
             <View className="relative">
               <View className="relative mb-2">
                 <Animated.View
                   style={[patientPulseStyle, styles.pulseCircle]}
                   className="absolute bg-red-500"
                 />
-                <View className="rounded-full bg-blue-100 w-[69px] h-[69px]  flex items-center justify-center shadow-lg shadow-blue-500/50">
+                <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50">
                   <Image
                     className="rounded-full  flex items-center justify-center"
                     source={require('@/assets/images/patient.png')}
@@ -222,14 +220,18 @@ export default function RecordingSession() {
                 className="items-center"
               >
                 <View className="bg-red-500 rounded-full p-4">
-                  <Ionicons name="mic-outline" size={24} color="white" />
+                  <Ionicons
+                    name={isPatientRecording ? 'stop' : 'mic'}
+                    size={24}
+                    color="white"
+                  />
                 </View>
                 <Text className="text-gray-600 font-medium mt-2">Patient</Text>
               </Pressable>
             </View>
           </View>
 
-          <View className="flex-row items-center justify-center ">
+          <View className="flex-row items-center justify-center absolute right-0 bottom-0 left-0 pb-12">
             <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
             <Text className="text-slate-500 ml-1">
               Recording is secure and encrypted.
@@ -275,18 +277,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pulseCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 69,
+    height: 69,
+    borderRadius: '100%',
     position: 'absolute',
     zIndex: 0,
-  },
-  loadingPlaceholder: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#e2e8f0',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

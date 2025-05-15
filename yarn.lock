@@ -1443,7 +1443,7 @@
     "@react-native-aria/focus" "^0.2.9"
     "@react-native-aria/interactions" "^0.2.16"
 
-"@gluestack-ui/toast@^1.0.8":
+"@gluestack-ui/toast@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@gluestack-ui/toast/-/toast-1.0.9.tgz#6ee18051e7af0459fbb3ede4cc4bf1a9ec1719a0"
   integrity sha512-aMlPczeoH/PZTMnhV29fqqW1Xc/9QmYEsR0bU9BfLyAGM9UMjW3vGe4yZSgxX7xjQ9C7+KO5WnTH0FmPoAbVtg==
@@ -4309,11 +4309,6 @@ expo-audio@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/expo-audio/-/expo-audio-0.4.5.tgz#e98de1a09420cab96e1a5cd8b95b7dd480c8915c"
   integrity sha512-QYJ9yLFAfH+YPYheqolbYL812lZWAsZVuRPrM6LZBsYYocaTTVVLQj+nggXKZwAjrIpQwpvH7jcziJy22I5Xpw==
-
-expo-blur@~14.1.4:
-  version "14.1.4"
-  resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-14.1.4.tgz#d246c0a224ce63321d022edfc0e6a8c5fa2cc865"
-  integrity sha512-55P9tK/RjJZEcu2tU7BqX3wmIOrGMOOkmHztJMMws+ZGHzvtjnPmT7dsQxhOU9vPj77oHnKetYHU2sik3iBcCw==
 
 expo-constants@~17.1.5, expo-constants@~17.1.6:
   version "17.1.6"
