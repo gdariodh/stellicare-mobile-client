@@ -164,15 +164,16 @@ export default function RecordingSession() {
   return (
     <AnimatedBackground>
       {/* Contenedor principal centrado */}
-      <View
-        style={styles.mainContainer}
-        className="flex-1 justify-center items-center px-4"
-      >
-        <View className="w-full max-w-md flex h-full relative justify-evenly">
+      <View style={styles.mainContainer} className="flex-1 h-full">
+        {/* Doctor and Patient Section - Centered */}
+        <View
+          style={styles.doctorPatientContainer}
+          className="w-full max-w-md flex flex-col gap-8"
+        >
           {/* Doctor Recorder Section */}
           <Pressable
             onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
-            className="items-center justify-center p-4 m-4 rounded-2xl"
+            className="items-center justify-center p-4 rounded-2xl"
             style={styles.sectionContainer}
           >
             <View className="relative items-center justify-center w-full">
@@ -205,10 +206,11 @@ export default function RecordingSession() {
               </View>
             </View>
           </Pressable>
+
           {/* Patient Recorder Section */}
           <Pressable
             onPress={isPatientRecording ? stopPatientRecording : recordPatient}
-            className="items-center justify-center p-4 m-4 rounded-2xl"
+            className="items-center justify-center p-4 rounded-2xl"
             style={styles.sectionContainer}
           >
             <View className="relative items-center justify-center w-full">
@@ -241,13 +243,13 @@ export default function RecordingSession() {
               </View>
             </View>
           </Pressable>
+        </View>
 
-          <View className="flex-row items-center justify-center absolute right-0 bottom-0 left-0 pb-12">
-            <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
-            <Text className="text-slate-500 ml-1">
-              This session is being securely recorded.
-            </Text>
-          </View>
+        <View className="flex-row items-center justify-center absolute right-0 bottom-0 left-0 pb-12">
+          <Ionicons name="lock-closed-outline" size={16} color="#64748b" />
+          <Text className="text-slate-500 ml-1">
+            This session is being securely recorded.
+          </Text>
         </View>
       </View>
 
@@ -286,6 +288,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  doctorPatientContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingBottom: 48,
   },
   sectionContainer: {
     position: 'relative',
@@ -293,6 +302,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: 16,
     overflow: 'hidden',
+    width: '100%',
+    marginVertical: 10,
   },
   pulseBackground: {
     position: 'absolute',

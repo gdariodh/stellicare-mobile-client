@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import MainAction from '@/components/MainAction';
 
 export default function Home() {
-  const [showRecorder, setShowRecorder] = useState(true);
+  const [showRecorder, setShowRecorder] = useState(false);
 
   return (
     <Box className="flex-1 bg-gray-50">
