@@ -168,18 +168,24 @@ export default function RecordingSession() {
         style={styles.mainContainer}
         className="flex-1 justify-center items-center px-4"
       >
-        <View className="w-full max-w-md flex border h-full relative justify-evenly">
+        <View className="w-full max-w-md flex h-full relative justify-evenly">
           {/* Doctor Recorder Section */}
           <Pressable
             onPress={isDoctorRecording ? stopDoctorRecording : recordDoctor}
             className="items-center justify-center p-4 m-4 rounded-2xl"
             style={styles.sectionContainer}
           >
-            <View className="relative items-center justify-center">
+            <View className="relative items-center justify-center w-full">
               <Animated.View
                 style={[doctorPulseStyle, styles.pulseBackground]}
                 className="absolute bg-primary-500"
               />
+
+              {/* Título en la parte superior */}
+              <Text className="text-gray-700 font-semibold text-lg mb-3">
+                Dr. Raúl
+              </Text>
+
               <View className="relative items-center">
                 <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50 mb-4">
                   <Image
@@ -189,29 +195,33 @@ export default function RecordingSession() {
                   />
                 </View>
 
-                <View className="bg-blue-500 rounded-full p-4 mb-2">
+                <View className="bg-blue-500 rounded-full p-4">
                   <Ionicons
                     name={isDoctorRecording ? 'stop' : 'mic'}
                     size={24}
                     color="white"
                   />
                 </View>
-                <Text className="text-gray-600 font-medium">Dr. Raúl</Text>
               </View>
             </View>
           </Pressable>
-
           {/* Patient Recorder Section */}
           <Pressable
             onPress={isPatientRecording ? stopPatientRecording : recordPatient}
             className="items-center justify-center p-4 m-4 rounded-2xl"
             style={styles.sectionContainer}
           >
-            <View className="relative items-center justify-center">
+            <View className="relative items-center justify-center w-full">
               <Animated.View
                 style={[patientPulseStyle, styles.pulseBackground]}
                 className="absolute bg-red-500"
               />
+
+              {/* Título en la parte superior */}
+              <Text className="text-gray-700 font-semibold text-lg mb-3">
+                Patient
+              </Text>
+
               <View className="relative items-center">
                 <View className="rounded-full bg-blue-100 w-[69px] h-[69px] flex items-center justify-center shadow-lg shadow-blue-500/50 mb-4">
                   <Image
@@ -221,14 +231,13 @@ export default function RecordingSession() {
                   />
                 </View>
 
-                <View className="bg-red-500 rounded-full p-4 mb-2">
+                <View className="bg-red-500 rounded-full p-4">
                   <Ionicons
                     name={isPatientRecording ? 'stop' : 'mic'}
                     size={24}
                     color="white"
                   />
                 </View>
-                <Text className="text-gray-600 font-medium">Patient</Text>
               </View>
             </View>
           </Pressable>
